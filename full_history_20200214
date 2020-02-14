@@ -1,0 +1,220 @@
+    1  git
+    2  sudo yum install git
+    3  logout
+    4  lab-configure
+    5  git clone https://github.com/dwi256/DO180-apps
+    6  cd DO180-apps/
+    7  head README.md 
+    8  sudo podman search rhel
+    9  sudo podman pull rhel
+   10  cd
+   11  cd DO180-apps/
+   12  ll
+   13  cd
+   14  sudo podman pull rhel
+   15  sudo podman images
+   16  sudo podman run ubi7/ubi:7.7 echo "Hello"
+   17  sudo podman -r -d rhscl/httpd-24-rhel7:2.4-36.8
+   18  sudo podman run -d rhscl/httpd-24-rhel7:2.4-36.8
+   19  podman ps
+   20  sudo podman ps
+   21  sudo podman inspect -l
+   22  sudo podman inspect -l -f "{{.NetorkSettings.IPAddress}}"
+   23  sudo podman inspect -l > -f "{{.NetorkSettings.IPAddress}}"
+   24  sudo podman inspect -l -f "{{.NetorkSettings.IPAddress}}"
+   25  sudo podman inspect -l
+   26  sudo podman inspect -l | grep -i network
+   27  sudo podman inspect -l -f "{{.NetworkSettings.IPAddress}}"
+   28  curl http://10.88.0.3
+   29  curl http://10.88.0.3:8080
+   30  sudo podman run -it ubi7/ubi:7.7 /bin/bash
+   31  sudo podman run -e GREET=Hello -e NAME=RedHat rhel7:7.5 GREET NAME
+   32  sudo podman run -e GREET=Hello -e NAME=RedHat rhel7:7.5 printenv GREET NAME
+   33  sudo podman run --name mysql-custom -e MYSQL_USER=redhat -e MYSQL_PASSWORD=r3dh4t -d rhmap47/mysql:5.5
+   34  lab container-create start
+   35  ll
+   36  sudo podman run --name mysql-basic -e MYSQL_USER=user1 -e MYSQL_PASSWORD=mypa55 -e MYSQL_DATABASE=items -e MYSQL_ROOT_PASSWORD=r00tpa55 -d rhscl/mysql-57-rhel7:5.7-3.14
+   37  sudo podman ps --format "{{.ID}} {{.Image}} {{.Names}}"
+   38  sudo podman exec -it mysql-basic /bin/bash
+   39  lab container-create finish
+   40  lab container-review start
+   41  sudo podman run -p 8080:80 --name httpd-basic -d redhattraining/http-parent:2.4 
+   42  sudo podman run -p 8080:80 --name httpd-basic -d redhattraining/httpd-parent:2.4 
+   43  curl http://localhost:8080
+   44  podman exec -it httpd-basic /bin/bash
+   45  podman ps
+   46  sudo podman ps
+   47  sudo podman exec -it httpd-basic /bin/bash
+   48  curl http://localhost:8080
+   49  lab container-review grade
+   50  lab container-review finish
+   51  sudo podman run rhscl/httpd-24-rhel7
+   52  sudo podman ps
+   53  sudo podman exec a72301a72083 cat /etc/hostname
+   54  sudo podman exec -l cat /etc/hostname
+   55  sudo podman exec a72301a72083 cat /etc/hostname
+   56  sudo podman ps -a
+   57  sudo podman inspect 2f6f8a1c32d7 
+   58  sudo podman stop -a
+   59  sudo podman rm -a
+   60  lab manage-lifecycle finish
+   61  history
+   62  ll
+   63  sudo mkdir /var/dbfiles
+   64  sudo chown -R 27:27 /var/dbfiles/
+   65  sudo semanage fcontext -a -t container_file_t '/var/dbfiles(/.*).?'
+   66  sudo restorecon -Rv /var/dbfiles/
+   67  sudo podman run -v /var/dbfiles:/var/lib/mysql rhmap47/mysql
+   68  cp .bash_history DO180-apps/
+   69  git add DO180-apps/
+   70  git add DO180-apps/.bash_history
+   71  cd DO180-apps/
+   72  git add .bash_history
+   73  git commit 
+   74  git push
+   75  cd
+   76  sudo mkdir -pv /var/local/mysql
+   77  lab manage-storage start
+   78  sudo rmdir /var/local/mysql
+   79  lab manage-storage start
+   80  sudo mkdir -pv /var/local/mysql
+   81  sudo semange fcontext -a -t container_file_t '/var/local/mysql(/.*)?'
+   82  sudo semanage fcontext -a -t container_file_t '/var/local/mysql(/.*)?'
+   83  sudo restorecon -R /var/local/mysql/
+   84  ls -dZ /var/local/mysql/
+   85  sudo chown mysql:mysql /var/local/mysql/
+   86  sudo chown 27:27 /var/local/mysql/
+   87  ls -dZ /var/local/mysql/
+   88  sudo podman pull rhscl/mysql-57-rhel7
+   89  sudo podman run --name persist-db -d -v /var/local/mysql:/var/lib/mysql/data -e MYSQL_USER=user1 -e MYSQL_PASSWORD=mypa55 -e MYSQL_DTABASE=items -e MYSQL_ROOT_PASSWORD=r00tpa55 rhscl/mysql-57-rhel7
+   90  sudo podman ps
+   91  sudo podman ps --format="table {{.ID}} {{.Names}} {{.Status}}
+   92  sudo podman ps --format="table {{.ID}} {{.Names}} {{.Status}}"
+   93  ls -la /var/local/mysql/
+   94  sudo podman ps --format="table {{.ID}} {{.Names}} {{.Status}}"
+   95  podman stop persist-db
+   96  sudo podman ps --format="table {{.ID}} {{.Names}} {{.Status}}"
+   97  podman stop 53245d1f3fd8 
+   98  podman kill                                                 53245d1f3fd8 
+   99  podman help
+  100  podman kill -f                                                 53245d1f3fd8 
+  101  podman kill --help
+  102  podman kill -s f                                                 53245d1f3fd8 
+  103  podman kill -a -f                                                 53245d1f3fd8 
+  104  podman kill  -f                                                 53245d1f3fd8 
+  105  podman kill -s f                                                 53245d1f3fd8 
+  106  podman ps
+  107  sudo podman ps
+  108  sudo podman stop persist-db
+  109  sudo podman run --name persist-db -d -v /var/local/mysql:/var/lib/mysql/data -e MYSQL_USER=user1 -e MYSQL_PASSWORD=mypa55 -e MYSQL_DaTABASE=items -e MYSQL_ROOT_PASSWORD=r00tpa55 rhscl/mysql-57-rhel7
+  110  sudo podman ps -a
+  111  sudo podman rm persist-db
+  112  sudo podman ps -a
+  113  sudo podman run --name persist-db -d -v /var/local/mysql:/var/lib/mysql/data -e MYSQL_USER=user1 -e MYSQL_PASSWORD=mypa55 -e MYSQL_DATABASE=items -e MYSQL_ROOT_PASSWORD=r00tpa55 rhscl/mysql-57-rhel7
+  114  ll /var/local/mysql/
+  115  sudo podman ps -a
+  116  sudo podman stop persist-db
+  117  sudo podman rm persist-db
+  118  cd /var/local/mysql/
+  119  ll
+  120  rm -fr *
+  121  sudo rm -fr *
+  122  ll
+  123  sudo podman run --name persist-db -d -v /var/local/mysql:/var/lib/mysql/data -e MYSQL_USER=user1 -e MYSQL_PASSWORD=mypa55 -e MYSQL_DATABASE=items -e MYSQL_ROOT_PASSWORD=r00tpa55 rhscl/mysql-57-rhel7
+  124  ll
+  125  lab manage-storage finish 
+  126  cat /etc/cni/net.d/87-podman-bridge.conflist 
+  127  sudo podman -run -d --name apache1 -p 8080:80 thscl/httpd-24-rhel7:2.4
+  128  sudo podman run -d --name apache1 -p 8080:80 thscl/httpd-24-rhel7:2.4
+  129  sudo podman run -d --name apache1 -p 8080:80 rhscl/httpd-24-rhel7:2.4
+  130  sudo podman run -d --name apache2 -p 127.0.0.1:8080:80 rhscl/httpd-24-rhel7:2:4
+  131  sudo podman run -d --name apache2 -p 127.0.0.1:8080:80 rhscl/httpd-24-rhel7:2.4
+  132  sudo podman run -d --name apache2 -p 127.0.0.1:8081:80 rhscl/httpd-24-rhel7:2.4
+  133  sudo podman ps
+  134  sudo podman run -d --name apache2 -p 127.0.0.1:8081:80 rhscl/httpd-24-rhel7:2.4
+  135  sudo podman ps -a
+  136  sudo podman rm apache2
+  137  sudo podman run -d --name apache2 -p 127.0.0.1:8081:80 rhscl/httpd-24-rhel7:2.4
+  138  sudo podman run -d --name apache3 -p 127.0.0.1::80 rhscl/httpd-24-rhel7:2.4
+  139  sudo podman port apache3
+  140  curl 127.0.0.1:8081
+  141  curl 127.0.0.1:38560
+  142  netstat -antp
+  143  service firewalld status
+  144  service firewalld stop
+  145  curl 127.0.0.1:38560
+  146  service firewalld start
+  147  podman logs apache4
+  148  sudo podman logs apache3
+  149  sudo podman rsh apache3
+  150  lab manage-networking start
+  151  sudo podman run --name mysqldb-port -d -v /var/local/mysql:/var/lib/mysql/data -p 13306:3306 -e MYSQL_USER=user1 -e MYSQL_PASSWORD=mypa55 -e MYSQL_DATABASE=items -e MYSQL_ROOT_PASSWORD=r00tpa55 rhscl/mysql-57-rhel7
+  152  sudo podman ps
+  153  mysql -uuser1 -h 127.0.0.1 -pmypa55 -P13306 items /home/student/DO180/labs/manage-networking/db.sql 
+  154  mysql -uuser1 -h 127.0.0.1 -pmypa55 -P13306 items < /home/student/DO180/labs/manage-networking/db.sql 
+  155  mysql -uuser1 -h 127.0.0.1 -pmypa55 -P13306 items -e "SELECT * from Item"
+  156  sudo podman exec -it mysqldb-port /bin/bash
+  157  sudo podman exec -it mysqldb-port /opt/rh/rh-mysql57/root/usr/bin/mysql -uroot items -e "SELECT * from Item"
+  158  lab manage-networking finish
+  159  cd
+  160  lab manage-networking finish
+  161  exit
+  162  OC LOGS -F BC/PHP-HELLOWORLD
+  163  oc logs -f bc/php-helloworld
+  164  cd -
+  165  pwd
+  166  cd ../../DO180/
+  167  git checkout master
+  168  cd ../DO180-apps/
+  169  git checkout master
+  170  git checkout -b s2i
+  171  git push -u origin s2i
+  172  source /usr/local/etc/ocp4.config 
+  173  oc login -u ${RHT_OCP4_DEV_USER} -p \>${RHT_OCP4_DEV_PASSWORD} ${RHT_OCP4_MASTER_API}
+  174  oc login -u ${RHT_OCP4_DEV_USER} -p ${RHT_OCP4_DEV_PASSWORD} ${RHT_OCP4_MASTER_API}
+  175  oc new-project ${RHT_OCP4_DEV_USER}-s2i
+  176  oc new-app -i php:7.1 --name=php-helloworld \>https://github.com/${RHT_OCP4_GITHUB_USER}/DO180-apps#s2i \>--context-dir php-helloworld
+  177  oc new-app -i php:7.1 --name=php-helloworld https://github.com/${RHT_OCP4_GITHUB_USER}/DO180-apps#s2i --context-dir php-helloworld
+  178  vi bin/create-app.sh 
+  179  oc get pods
+  180  vi bin/oc.txt
+  181  sh bin/oc.txt
+  182  oc describe dc/php-helloworld
+  183  vi bin/oc.txt 
+  184  mv bin/oc.txt bin/oc-cmds.sh
+  185  chmod 700 bin/oc-cmds.sh 
+  186  vim bin/oc-cmds.sh 
+  187  bin/oc-cmds.sh 
+  188  vim bin/oc-cmds.sh 
+  189  bin/oc-cmds.sh 
+  190  vim bin/oc-cmds.sh 
+  191  bin/oc-cmds.sh 
+  192  vim bin/oc-cmds.sh 
+  193  bin/oc-cmds.sh 
+  194  curl -s ${RHT_OCP4_DEV_USER}-helloworld-${RHT_OCP4_DEV_USER}-s2i.${RHT_OCP4_WILDCARD_DOMAIN}
+  195  vim bin/oc-cmds.sh 
+  196  bin/oc-cmds.sh 
+  197  vim php-helloworld/index.php 
+  198  cd php-helloworld/
+  199  git add .
+  200  git commit -m'update on php/index.php'
+  201  git push
+  202  git push origin s2i
+  203  cd ..
+  204  vim bin/oc-cmds.sh 
+  205  bin/oc-cmds.sh 
+  206  oc get pods -w
+  207  vim bin/oc-cmds.sh 
+  208  bin/oc-cmds.sh 
+  209  oc get pods -w
+  210  bin/oc-cmds.sh 
+  211  lab openshift-s2i finish
+  212  ll
+  213  ls -lart
+  214  mv .bash_history bash_history 
+  215  git add bash_history
+  216  git add bin/*
+  217  git commit -m 'new'
+  218  git push
+  219  history 
+  220  history > full_history_20200214
